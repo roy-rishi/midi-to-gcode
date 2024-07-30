@@ -4,6 +4,9 @@ documents/
 # System
 .DS_Store
 
+# Editor
+.vscode
+
 
 # Go ignore template:
 # Binaries for programs and plugins

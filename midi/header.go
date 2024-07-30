@@ -25,8 +25,10 @@ func hDivision(hBin []byte) int {
 	return int(hBin[12])<<8 | int(hBin[13])
 }
 
-func ParseHeader(hBin []byte) header {
-	h := header{}
+// Parse the MIDI header for file metadata.
+// Input: full MIDI file contents
+func ParseHeader(hBin []byte) Header {
+	h := Header{}
 	// MThd
 	if !hVerify(hBin) {
 		log.Fatal("File not recognized as MIDI")
@@ -36,10 +38,16 @@ func ParseHeader(hBin []byte) header {
 	if len != 6 {
 		log.Fatalf("Header must be 6 bytes long; it is %d", len)
 	}
-	h.length = len
-	h.format = hFormat(hBin)     // format
-	h.nTracks = hNumTracks(hBin) // n
-	h.division = hDivision(hBin) // division
+	h.Length = len
+	// format
+	format := hFormat(hBin)
+	if format != 1 {
+		log.Fatalf("Format must be 1; it is %v", format)
+	}
+	h.Format = format
+	h.NumTracks = hNumTracks(hBin) // n
+	h.Division = hDivision(hBin)   // division
 
+	log.Printf("HEADER %+v\n\n", h)
 	return h
 }
