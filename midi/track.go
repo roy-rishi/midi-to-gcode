@@ -71,9 +71,10 @@ func ParseTracks(data []byte, nTracks int) []TrackChunk {
 					case 81: // tempo change
 						log.Println("TEMPO CHANGE")
 						value := int(data[pos])<<16 | int(data[pos+1])<<8 | int(data[pos+2])
-						bpm := 60000000 / value
-						log.Printf("bpm %v (value %v)\n", bpm, value)
-						te.Tempo = bpm
+						// bpm := 60000000 / value
+						// log.Printf("bpm %v (value %v)\n", bpm, value)
+						// te.Tempo = bpm
+						te.Tempo = value
 						te.Type = "tempo_change"
 						tc.Events = append(tc.Events, te)
 					default:
@@ -162,7 +163,7 @@ func ParseTracks(data []byte, nTracks int) []TrackChunk {
 			}
 		}
 		startPos = nextPos
-		log.Printf("%+v\n\n", tc)
+		tracks = append(tracks, tc)
 	}
 	return tracks
 }

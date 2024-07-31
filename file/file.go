@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func Read(filePath string) []byte {
+func ReadBin(filePath string) []byte {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
